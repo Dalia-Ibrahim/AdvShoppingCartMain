@@ -158,7 +158,7 @@ def delete_user():
     sleep(0.25)
     # Select My Account
     driver.find_element(By.XPATH, '//label[@role="link"][contains(., "My account")]').click()
-    sleep(0.25)
+    sleep(1)
     # Scroll down the page
     driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
     sleep(2)
