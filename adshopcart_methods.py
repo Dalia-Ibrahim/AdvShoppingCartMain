@@ -3,6 +3,7 @@ import adshopcart_locators as locators
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 s = Service(executable_path=r"C:\Users\amr_a\PycharmProjects\python_cctb\chromedriver.exe")
 driver = webdriver.Chrome(service=s)
@@ -161,10 +162,10 @@ def delete_user():
     sleep(1)
     # Scroll down the page
     driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-    sleep(2)
+    sleep(1)
     # Click on Delete Account button
     driver.find_element(By.CLASS_NAME, "deleteBtnText").click()
-    sleep(2)
+    sleep(1)
     # Click on Yes button
     driver.find_element(By.XPATH, '//div[contains(@class, "deleteRed")]').click()
     sleep(1)
@@ -173,6 +174,127 @@ def delete_user():
     if not driver.current_url == locators.advantage_shopping_url:
         driver.get(locators.advantage_shopping_url)
         sleep(7)
+
+
+def check_homepage():
+    # Check that SPEAKERS texts is displayed.
+    speakers_element = driver.find_element(By.ID, "speakersTxt").text
+    sleep(0.25)
+    print(f"You\'re seeing {speakers_element} in homepage")
+    # Click on Speaker link
+    driver.find_element(By.ID, "speakersTxt").click()
+    sleep(0.25)
+    # Check SPEAKERS is displayed
+    assert driver.find_element(By.XPATH, '//h3[contains(., "SPEAKERS")]').is_displayed()
+    sleep(0.75)
+    print(f"You\'re in the following page: {driver.current_url}")
+    driver.get(locators.advantage_shopping_url)
+    # Check that TABLETS texts is displayed.
+    tablets_element = driver.find_element(By.ID, "tabletsTxt").text
+    sleep(0.25)
+    print(f"You\'re seeing {tablets_element} in homepage")
+    # Click on TABLETS link
+    driver.find_element(By.ID, "tabletsTxt").click()
+    sleep(0.25)
+    # Check TABLETS is displayed
+    assert driver.find_element(By.XPATH, '//h3[contains(., "TABLETS")]').is_displayed()
+    sleep(0.75)
+    print(f"You\'re in the following page: {driver.current_url}")
+    driver.get(locators.advantage_shopping_url)
+    # Check that HEADPHONES texts is displayed.
+    headphones_element = driver.find_element(By.ID, "headphonesTxt").text
+    sleep(0.25)
+    print(f"You\'re seeing { headphones_element} in homepage")
+    # Click on HEADPHONES link
+    driver.find_element(By.ID, "headphonesTxt").click()
+    sleep(0.25)
+    # Check HEADPHONES is displayed
+    assert driver.find_element(By.XPATH, '//h3[contains(., "HEADPHONES")]').is_displayed()
+    sleep(0.75)
+    print(f"You\'re in the following page: {driver.current_url}")
+    driver.get(locators.advantage_shopping_url)
+    # Check that LAPTOPS texts is displayed.
+    laptops_element = driver.find_element(By.ID, "laptopsTxt").text
+    sleep(0.25)
+    print(f"You\'re seeing {laptops_element} in homepage")
+    # Click on LAPTOPS link
+    driver.find_element(By.ID, "laptopsTxt").click()
+    sleep(0.25)
+    # Check LAPTOPS is displayed
+    assert driver.find_element(By.XPATH, '//h3[contains(., "LAPTOPS")]').is_displayed()
+    sleep(0.75)
+    print(f"You\'re in the following page: {driver.current_url}")
+    driver.get(locators.advantage_shopping_url)
+    # Check that MICE texts is displayed.
+    mice_element = driver.find_element(By.ID, "miceTxt").text
+    sleep(0.25)
+    print(f"You\'re seeing {mice_element} in homepage")
+    # Click on MICE link
+    driver.find_element(By.ID, "miceTxt").click()
+    sleep(0.25)
+    # Check MICE is displayed
+    assert driver.find_element(By.XPATH, '//h3[contains(., "MICE")]').is_displayed()
+    sleep(0.75)
+    print(f"You\'re in the following page: {driver.current_url}")
+    driver.get(locators.advantage_shopping_url)
+    # Click by OUR PRODUCTS
+    driver.find_element(By.LINK_TEXT, "OUR PRODUCTS").click()
+    sleep(0.5)
+    # Check that OUR PRODUCTS is displayed.
+    assert driver.find_element(By.XPATH, "//a[contains(., 'OUR PRODUCTS')]").is_displayed()
+    # Click by SPECIAL OFFER
+    driver.find_element(By.LINK_TEXT, "SPECIAL OFFER").click()
+    sleep(0.5)
+    # Check that SPECIAL OFFER is displayed
+    assert driver.find_element(By.XPATH, "//h3[contains(., 'SPECIAL OFFER')]").is_displayed()
+    # Click by POPULAR ITEMS
+    driver.find_element(By.LINK_TEXT, "POPULAR ITEMS").click()
+    sleep(0.5)
+    # Check that POPULAR ITEMS is displayed
+    assert driver.find_element(By.XPATH, '//h3[contains(.,"POPULAR ITEMS")]').is_displayed()
+    # Click by CONTACT US
+    driver.find_element(By.LINK_TEXT, "CONTACT US").click()
+    # Check that CONTACT US is displayed
+    assert driver.find_element(By.XPATH, '//h1[contains(.,"CONTACT US")]').is_displayed()
+    # Check main logo is displayed.
+    assert driver.find_element(By.XPATH, '//span[contains(., "dvantage")]').is_displayed()
+    assert driver.find_element(By.XPATH, '//span[contains(., "DEMO")]').is_displayed()
+    print("advantage Demo Logo is displayed")
+
+
+def check_contact_us_form():
+    # Click by CONTACT US
+    driver.find_element(By.LINK_TEXT, "CONTACT US").click()
+    sleep(0.25)
+    # Check that CONTACT US is displayed
+    assert driver.find_element(By.XPATH, '//h1[contains(.,"CONTACT US")]').is_displayed()
+    # Select LapTop from dropdown-menu
+    driver.find_element(By.XPATH, '//select[@name="categoryListboxContactUs"]/option[@value="object:59"]').click()
+    sleep(0.25)
+    print("You selected first element LapTop")
+    # Select HP Chromebook 14 from dropdown-menu
+    select = Select(driver.find_element(By.NAME, "productListboxContactUs"))
+    select.select_by_visible_text("HP Chromebook 14 G1(ENERGY STAR)")
+    print("You selected HP Chromebook 14 G1(ENERGY STAR) ")
+    # Enter fake data into Email open field
+    driver.find_element(By.NAME, "emailContactUs").send_keys(locators.email)
+    sleep(0.25)
+    # Enter fake data into Subject open field
+    driver.find_element(By.NAME, "subjectTextareaContactUs").send_keys(locators.subject)
+    sleep(0.25)
+    # Click on Send button
+    driver.find_element(By.ID, "send_btnundefined").click()
+    sleep(5)
+    # Check Thanks message is displayed
+    assert driver.find_element(By.XPATH, '//*[contains(@class, "successMessage")]').is_displayed()
+    sleep(1)
+    thanks_message = driver.find_element(By.XPATH, '//*[contains(@class, "successMessage")]').text
+    print(f"{thanks_message}")
+    # Check CONTINUE SHOPPING button is displayed
+    assert driver.find_element(By.LINK_TEXT, "CONTINUE SHOPPING").is_displayed()
+    # Click on CONTINUE SHOPPING button
+    driver.find_element(By.LINK_TEXT, "CONTINUE SHOPPING").click()
+    sleep(0.25)
 
 
 

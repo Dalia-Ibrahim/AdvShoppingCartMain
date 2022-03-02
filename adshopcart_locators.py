@@ -23,3 +23,4 @@ province = fake.province_abbr()
 postal_code = fake.postalcode_in_province()
 current_name = new_username
 current_password = new_password
+subject = fake.sentence(nb_words=20)
